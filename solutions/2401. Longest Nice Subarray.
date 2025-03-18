@@ -1,0 +1,25 @@
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var longestNiceSubarray = function(nums) {
+    let left = 0;       // Con trỏ trái của cửa sổ
+    let bitMask = 0;    // Lưu trạng thái bit của dãy con hiện tại
+    let maxLength = 0;  // Kết quả: độ dài lớn nhất
+
+    for (let right = 0; right < nums.length; right++) {
+        // Nếu có trùng bit, loại bỏ số ở vị trí `left` cho đến khi hợp lệ
+        while ((bitMask & nums[right]) !== 0) {
+            bitMask ^= nums[left];  // Xóa số `nums[left]` khỏi bitMask
+            left++;  // Thu hẹp cửa sổ
+        }
+
+        // Thêm số mới vào bitMask
+        bitMask |= nums[right];
+
+        // Cập nhật độ dài lớn nhất
+        maxLength = Math.max(maxLength, right - left + 1);
+    }
+
+    return maxLength;
+};
