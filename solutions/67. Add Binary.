@@ -1,0 +1,17 @@
+/**
+ * @param {string} a
+ * @param {string} b
+ * @return {string}
+ */
+var addBinary = function(a, b) {
+    let x = BigInt(`0b${a}`);
+    let y = BigInt(`0b${b}`);
+
+    while (y !== 0n) {
+        let carry = (x & y) << 1n; // Tính phần nhớ
+        x = x ^ y; // Cộng bit không tính phần nhớ
+        y = carry; // Cập nhật phần nhớ
+    }
+
+    return x.toString(2);
+};
